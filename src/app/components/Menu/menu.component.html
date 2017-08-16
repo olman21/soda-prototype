@@ -1,0 +1,23 @@
+<h1 *ngIf="!modal">Menu</h1>
+<table class="striped">
+  <thead>
+    <tr>
+      <th>Descripcion</th>
+      <th>Precio</th>
+      <th>Cantidad</th>
+      <th><i class="small material-icons">check</i></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let p of products">
+      <td>{{p.description}}</td>
+      <td>{{p.price}}</td>
+      <td *ngIf="!modal">{{p.qty}}</td>
+      <td *ngIf="modal">
+        <input type="text" id="qty" [(ngModel)]="p.newQty" />
+      </td>
+      <td><a href="javascript:void" (click)="selectItem(p)">Seleccionar</a></td>
+    </tr>
+  </tbody>
+</table>

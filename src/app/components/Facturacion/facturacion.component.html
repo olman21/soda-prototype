@@ -1,0 +1,43 @@
+<a class="waves-effect waves-light btn" *ngIf="!readonly" (click)="openModal()">Agregar del Menu</a>
+
+<div *ngIf="products && products.length > 0">
+  <h1 *ngIf="!readonly">Orden</h1>
+  <h1 *ngIf="readonly">Orden: {{orderId}}</h1>
+  <table class="striped">
+    <thead>
+      <tr>
+        <th>Descripcion</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let p of products; let i=index;">
+        <td>{{p.description}}</td>
+        <td>{{p.total}}</td>
+        <td *ngIf="!readonly">
+            <input type="text" id="qty" [(ngModel)]="p.qty" (change)="calculateItemTotal(p, p.qty)" />
+        </td>
+        <td *ngIf="readonly">{{p.qty}}</td>
+        <td><a href="javascript:void" *ngIf="!readonly" (click)="removeProduct(i)"><i class="small material-icons" style="color:red;">clear</i></a></td>
+      </tr>
+      <tr>
+          <td colspan="3" style="text-align: right;"><strong>TOTAL</strong></td>
+          <td>{{grandTotal}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <a class="waves-effect waves-light btn" *ngIf="!readonly" (click)="saveOrder()"><i class="material-icons left">done_all</i>Cobrar</a>
+</div>
+
+  <div id="modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+    <div class="modal-content">
+      <h4>Menu</h4>
+      <menu-component [modal]="true" (selectItemAction)="selectProduct($event)"></menu-component>
+    </div>
+    <div class="modal-footer">
+      <a class="waves-effect waves-green btn-flat"  href="javascript:void" (click)="closeModal()">Cerrar</a>
+    </div>
+  </div>
